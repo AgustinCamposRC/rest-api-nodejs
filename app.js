@@ -1,5 +1,7 @@
 import express from 'express'
-import movies from './movies.json' with { type: "json" };
+import movies from './movies.json' assert {
+    type: 'json',
+};
 import crypto from "node:crypto"
 import {validateMovie, validatePartialMovie} from './schemas/movies.js'
 
