@@ -1,24 +1,25 @@
 import express from 'express'
 import {corsMiddleware} from './middlewares/cors.js'
-import {movieRouter} from './routes/movie.js'
+import {createMovieRouter} from './routes/movie.js'
+import 'dotenv/config'
 
-const app = express()
-const PORT = process.env.PORT ?? 3000
+export const createApp = ({movieModel}) => {
+    const app = express()
+    const PORT = process.env.PORT ?? 3000
+    app.disable('x-powered-by')
 
+    app.use(express.json())
+    app.use(corsMiddleware())
 
-app.disable('x-powered-by')
+    // Todos los recursos que sean MOVIES se identifica con /movies
+    app.use('/movies', createMovieRouter({movieModel}))
 
-app.use(express.json())
-app.use(corsMiddleware())
+    app.options('/movies/:id', (req, res)=> {
+        res.header("Access-Control-Allow-Origin",'*')
+        res.header("Access-Control-Allow-Methods",'GET, POST, PUT, PATCH, DELETE')
+        res.sendStatus(200)
+    })
 
-// Todos los recursos que sean MOVIES se identifica con /movies
-app.use('/movies', movieRouter)
-
-app.options('/movies/:id', (req, res)=> {
-    res.header("Access-Control-Allow-Origin",'*')
-    res.header("Access-Control-Allow-Methods",'GET, POST, PUT, PATCH, DELETE')
-    res.sendStatus(200)
-})
-
-
-app.listen(PORT, ()=>console.log(`Running on: http://localhost:${PORT}/....`))
+    app.listen(PORT, ()=>console.log(`Running Server on Port: ${PORT}`))
+    
+}

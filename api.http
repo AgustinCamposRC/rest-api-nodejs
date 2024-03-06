@@ -1,0 +1,45 @@
+### Get All Movies
+GET http://localhost:3000/movies
+
+
+### Get All Movies By Filter
+GET http://localhost:3000/movies?genre=action
+
+
+### Get one Movie By ID
+GET http://localhost:3000/movies/0df9b943-daa7-11ee-9549-92b0bc9bd457
+
+
+
+### Post a new Movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "sql": "SELECT * FROM users",
+  "title": "The Godfather",
+  "year": 1975,
+  "director": "Francis Ford Coppola",
+  "duration": 175,
+  "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+  "genre": [
+    "Crime",
+    "Drama"
+  ]
+}
+
+
+### Delete a Movie by ID
+DELETE  http://localhost:3000/movies/0df9b943-daa7-11ee-9549-92b0bc9bd457
+
+
+### Post a new Movie
+PATCH  http://localhost:3000/movies/e6759b51-da71-11ee-9549-92b0bc9bd457
+Content-Type: application/json
+
+{
+  "year": 1975,
+  "genre": [
+    "Sci-Fi","Action"
+  ]
+}
